@@ -17,6 +17,7 @@ require.config({
     //= Mixins
     // ---------
     'utilities'                 : '../../backbone/mixins/utilities',
+    'autocomplete'              : '../../backbone/mixins/autocomplete',
 
     // ---------
     //= Core App

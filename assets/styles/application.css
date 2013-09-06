@@ -29,6 +29,16 @@
 }
 
 /*****************
+= SEARCH
+******************/
+.search-result-row {
+	width: 200px; 
+	height: 40px; 
+	background: #eee; 
+	border-bottom: 1px #000 solid;
+}
+
+/*****************
 =  PROJECTS 
 ******************/
 

@@ -10,11 +10,12 @@ define([
 	'project_form_view',
 	'projects_app',
 	'modal_component',
-	'project_edit_form_view'
+	'project_edit_form_view',
+	'autocomplete'
 ], function (
 	_, Backbone, Bootstrap, Utilities, BaseController, 
 	ProjectsCollection, ProjectsCollectionView, ProjectShowController, 
-	ProjectFormView, ProjectApp, ModalComponent, ProjectEditFormView) {
+	ProjectFormView, ProjectApp, ModalComponent, ProjectEditFormView, autocomplete) {
 	
 	Application.Project.ListController = BaseController.extend({
 
@@ -24,11 +25,13 @@ define([
 			"click .project"				: "show",
 			"click .add-project"		: "add",
 			"click .edit-project"		: "edit",
-			"click .delete-project"	: "delete"
+			"click .delete-project"	: "delete",
+			"keyup .search"					: "search"
 		},
 
 		initialize: function () {
 			var self = this;
+
 			this.fireUpProjectsCollection();
 			this.bindToProjectFetchListeners();
 			this.collection.trigger("projects:fetch");
@@ -100,6 +103,37 @@ define([
           collection: self.collection
         }).render();  
       }
+
+		},
+
+		search: function (e) {
+			var enterKey = 13;
+
+			// If they hit the enter key to turn off the default alert that pops up, then
+			// don't allow that to continually bubble the autcomplete (which would otherwise cause a loop).
+			// This enter key stops it.
+			if (e.keyCode === enterKey) return;
+
+			// So far we can pass to this plugin:
+			// Backbone params: 
+			// 	backboneEvents: true/false,
+			// 	backbone: {
+			// 		views: 'viewName',
+			// 		model: 'modelName'
+			// 	}
+			// NonBackbone params:
+			// 	on: 'keyup/keydown/click/etc'
+			// 	
+			// Note: You can use this with the backbone eventing system, by delegating your input element 
+			// to a backbone event on keypress/keyup, etc, and then in the function caller for that initialize this 
+			// plugin.  It needs to be initialized in line on the keyup, because the function does a check and then goes out
+			// to the server on each keypress.
+			$(".search").midasAutocomplete({
+				backboneEvents: true,
+				backbone: false,
+				apiEndpoint: '/ac/inline?q=',
+				type: 'POST'
+			});
 
 		},
 
