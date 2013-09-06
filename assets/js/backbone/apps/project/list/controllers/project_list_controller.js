@@ -118,11 +118,13 @@ define([
 			// Backbone params: 
 			// 	backboneEvents: true/false,
 			// 	backbone: {
-			// 		views: 'viewName',
+			// 		view: 'viewName',
 			// 		model: 'modelName'
 			// 	}
 			// NonBackbone params:
-			// 	on: 'keyup/keydown/click/etc'
+			// 	on: 'keyup/keydown/click/etc',
+			// 	apiEndpoint: '/some/server/path?query=',
+			// 	type: 'POST/GET/etc'
 			// 	
 			// Note: You can use this with the backbone eventing system, by delegating your input element 
 			// to a backbone event on keypress/keyup, etc, and then in the function caller for that initialize this 
