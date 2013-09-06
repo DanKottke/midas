@@ -124,7 +124,8 @@ define([
 			// NonBackbone params:
 			// 	on: 'keyup/keydown/click/etc',
 			// 	apiEndpoint: '/some/server/path?query=',
-			// 	type: 'POST/GET/etc'
+			// 	type: 'POST/GET/etc',
+			// 	searchResultsClass: '.class-name-of-wrapper-for-search-results'
 			// 	
 			// Note: You can use this with the backbone eventing system, by delegating your input element 
 			// to a backbone event on keypress/keyup, etc, and then in the function caller for that initialize this 
@@ -134,7 +135,8 @@ define([
 				backboneEvents: true,
 				backbone: false,
 				apiEndpoint: '/ac/inline?q=',
-				type: 'POST'
+				type: 'POST',
+				searchResultsClass: ".search-results-wrapper"
 			});
 
 		},
