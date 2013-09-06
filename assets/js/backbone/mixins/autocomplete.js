@@ -3,15 +3,16 @@
   $.fn.midasAutocomplete = function (options) {
     options = options || {}
 
-    var $input          = this,
-        on              = options.on,
-        type            = options.type,
-        $inputData      = $input.val(),
-        backbone        = options.backbone,
-        apiEndpoint     = options.apiEndpoint,
-        backboneEvents  = options.backboneEvents,
-        success         = options.success || (function () {}),
-        failure         = options.failure || (function () {})
+    var $input                = this,
+        on                    = options.on,
+        type                  = options.type,
+        $inputData            = $input.val(),
+        backbone              = options.backbone,
+        apiEndpoint           = options.apiEndpoint,
+        backboneEvents        = options.backboneEvents,
+        searchResultsWrapper  = options.searchResultsClass
+        success               = options.success || (function () {}),
+        failure               = options.failure || (function () {})
 
 
     // If we are using the backbone event bus then skip all binding, and move onto another check.
@@ -77,10 +78,10 @@
 
           // On each new successful character search, 
           // replace the previous results, and append the new results.
-          $(".search-result-wrapper").children().remove();
+          $(searchResultsWrapper).children().remove();
 
           for ( ; i < results; i += 1 ) {
-            $(".search-result-wrapper").append(template(data[i]));  
+            $(searchResultsWrapper).append(template(data[i]));  
           }
 
         },
