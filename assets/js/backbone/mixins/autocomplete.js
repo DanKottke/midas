@@ -49,20 +49,7 @@
           initializeAjaxAutocomplete()
           break
       }
-
-      // if (typeof backbone === "object") {
-      //   if (backbone.model === undefined || backbone.view === undefined) console.warn("Please pass a model and search result view to work with")
-      //   // init all the models, views, etc passed in because we have a person
-      //   // that wants to run this plugin based on a backbone architecture
-      //   initializeBackboneAutocomplete(model, view)
-
-      //   // We have a requirement that the backbone option be an object, because if they accidentally pass backbone: true, then we 
-      //   // cant really help them but we do prompt them.
-      // } else if (typeof backbone !== "object" || backbone === false || backbone === undefined || backbone === null) {
-      //   if (backbone === true) console.warn("You need to pass an object to the backbone paramater, with your views and models to spin up.  True won't cut it.")
-      //   initializeAjaxAutocomplete();
-      // }
-
+      
     }
 
     function initializeBackboneAutocomplete () {
