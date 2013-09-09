@@ -15,11 +15,11 @@
         $triggerChar          = options.trigger,
         backbone              = options.backbone,
         queryParam            = options.queryParam,
-        $inputDataAsArray     = $inputData.split(""),
         contentType           = options.contentType,
         apiEndpoint           = options.apiEndpoint,
+        $inputDataAsArray     = $inputData.split(""),
+        $firstCharOfInput     = $inputDataAsArray[0],
         backboneEvents        = options.backboneEvents,
-        $firstCharOfInput     = $inputData.split("")[0],
         searchResultsWrapper  = options.searchResultsClass,
 
         // Here they can override the success and failure messages completely
