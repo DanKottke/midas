@@ -125,6 +125,7 @@ define([
 			// 	on: 'keyup/keydown/click/etc',
 			// 	apiEndpoint: '/some/server/path?query=',
 			// 	type: 'POST/GET/etc',
+			// 	contentType: 'json', 'jsonp', 'html',
 			// 	searchResultsClass: '.class-name-of-wrapper-for-search-results'
 			// 	
 			// Note: You can use this with the backbone eventing system, by delegating your input element 
@@ -133,10 +134,19 @@ define([
 			// to the server on each keypress.
 			$(".search").midasAutocomplete({
 				backboneEvents: true,
+				// If we are using backbone here, then a lot of these 
+				// misc. AJAX options we are passing are unecessary.  So we should somehow
+				// manage that in an elegant way.  
 				backbone: false,
-				apiEndpoint: '/ac/inline?q=',
+				apiEndpoint: '/ac/inline',
+				queryParam: 'q',
 				type: 'POST',
-				searchResultsClass: ".search-results-wrapper"
+				contentType: 'json',
+				searchResultsClass: ".search-result-wrapper",
+
+				success: function (data) {
+
+				}
 			});
 
 		},

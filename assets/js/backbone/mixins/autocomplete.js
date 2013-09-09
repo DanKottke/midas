@@ -1,5 +1,5 @@
 // The semicolon at the beginning is in case of another library breaking ours (prevents ASI errors).
-// This plugin is being created with using absolutely 0 semi-colons.  We are using our knowledge of Automatic
+// This plugin is being created using absolutely 0 semi-colons.  We are using our knowledge of Automatic
 // semicolon insertion (ASI) in JavaScript to do that for us, so we don't have to.  It's an experiment in cleanliness
 // if nothing else.
 
@@ -13,6 +13,7 @@
         type                  = options.type,
         $inputData            = $input.val(),
         backbone              = options.backbone,
+        queryParam            = options.queryParam,
         contentType           = options.contentType,
         apiEndpoint           = options.apiEndpoint,
         backboneEvents        = options.backboneEvents,
@@ -49,7 +50,7 @@
           initializeAjaxAutocomplete()
           break
       }
-      
+
     }
 
     function initializeBackboneAutocomplete () {
@@ -57,15 +58,20 @@
     }
 
 
-
     // -----------------------------
     //= Begin AJAX Implementation
     // -----------------------------
     function initializeAjaxAutocomplete () {
 
+      // We need to make sure we check that the user didn't add a trailing / 
+      // as the backend will respond to a /path?QUERYPARAM=foo
+      // Not a /path/?queryPARAM=foo
+      // so we need to make sure we pop that off if it is there
+      var cleanedEndpoint = removeTrailingBackslash(apiEndpoint)
+
       $.ajax({
 
-        url: apiEndpoint + $inputData,
+        url: cleanedEndpoint + '?' + queryParam + '=' + $inputData,
         type: type,
         contentType: contentType,
 
@@ -120,6 +126,19 @@
             result.value +
           "</div>" + 
         "</div>"
+    }
+
+  }
+
+  // ------
+  // = UTILITY Function 
+  // ------
+  function removeTrailingBackslash (str) {
+    var _s  = str.split(""),
+        len = _s.length - 1
+
+    if (_s[len] === "/") {
+      return _s.pop()
     }
 
   }
