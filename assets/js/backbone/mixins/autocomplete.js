@@ -12,21 +12,25 @@
         on                    = options.on,
         type                  = options.type,
         $inputData            = $input.val(),
+        $triggerChar          = options.trigger,
         backbone              = options.backbone,
         queryParam            = options.queryParam,
+        $inputDataAsArray     = $inputData.split(""),
         contentType           = options.contentType,
         apiEndpoint           = options.apiEndpoint,
         backboneEvents        = options.backboneEvents,
+        $firstCharOfInput     = $inputData.split("")[0],
         searchResultsWrapper  = options.searchResultsClass,
 
         // Here they can override the success and failure messages completely
         // But this override is not implemented yet.
         success               = options.success || (function () {}),
         failure               = options.failure || (function () {})
+        
 
 
     // If we are using the backbone event bus then skip all binding, and move onto another check.
-    if (backboneEvents === true) {
+    if (backboneEvents === true && !options.trigger || options.trigger === false) {
       fetchDataUsingBackboneOrAjax()
     }
 
@@ -34,6 +38,22 @@
       $input.bind(on, function () {
         fetchDataUsingBackboneOrAjax()
       })
+    }
+
+    // Here we check if the trigger character exists, and if so we
+    // wait for it before initializing search, and of course strip it out before
+    // the search.
+    if ($triggerChar) {
+      if ($firstCharOfInput === $triggerChar) {
+        // Strip off first elem of array, and join back up to string
+        // then set the $inputData that the ajax uses to the output of that 
+        $inputDataAsArray.shift()
+        $inputData = $inputDataAsArray.join("")
+        fetchDataUsingBackboneOrAjax()
+      } else {
+        $(searchResultsWrapper).children().remove()
+        return;
+      }
     }
 
     function fetchDataUsingBackboneOrAjax () {
@@ -67,7 +87,16 @@
       // as the backend will respond to a /path?QUERYPARAM=foo
       // Not a /path/?queryPARAM=foo
       // so we need to make sure we pop that off if it is there
-      var cleanedEndpoint = removeTrailingBackslash(apiEndpoint)
+      var _s  = apiEndpoint.split(""),
+          len = _s.length - 1,
+          cleanedEndpoint
+
+      if (_s[len] === "/") {
+        cleanedEndpoint = _s.pop()
+        return cleanedEndpoint
+      } else {
+        cleanedEndpoint = apiEndpoint
+      }
 
       $.ajax({
 
@@ -118,13 +147,28 @@
       // OR the other optinos is to say that these words target and value are standardized enough for an autocomplete
       // that they can then craft the backend to match this API expectation on the front-end.  I think that is a more
       // elegant solution.  
+      
+      // Here what we are doing is we are checking for the result.target (type) to match predefined
+      // patterns then we are setting some icons for those types.  Ideal: comes back from server with icon.
+      // For now, a switch statement here would work great. 
+      // We are overriding the result.target with the icon type so that we don't have to do the check within the return
+      // statement.
+      if (result.target === "wikipedia") {
+        result.target = "<img src='http://i.imgur.com/EwNMVSb.png' width='40px' />"
+        result.value = "<a href='http://en.wikipedia.org/wiki/Special:Search?search=" + result.value + "&go=Go'>" + result.value + "</a>"
+      } else if (result.target === "user") {
+        result.target = "<img src='http://i.imgur.com/URcgvDA.png' width='40px' />"
+      }
+
       return " " +
-        "<div class='user-photo'> " + 
-          "<div class='search-result-row'> " +
-            result.target +
-            "<br />" + 
-            result.value +
-          "</div>" + 
+        "<div class='search-result-row'> " +
+          "<span class='search-result-type' style='border-right: 1px #000 solid; height: 100%; float: left;'>" +
+            result.target +    
+          "</span>" +
+          "<br />" + 
+          "<span class='search-result-value' style='float: left;'>" +
+            result.value + 
+          "</span>" +
         "</div>"
     }
 

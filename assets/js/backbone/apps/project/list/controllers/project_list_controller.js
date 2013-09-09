@@ -139,9 +139,18 @@ define([
 				// manage that in an elegant way.  
 				backbone: false,
 				apiEndpoint: '/ac/inline',
+				// the query param expects one api endpoint IE:
+				// /nested/endpoint?QUERYPARAM=$(".search").val()
+				// So it is not something that you can chain params onto.  
+				// It expects you to send the data back as input data through that query param
+				// one character at a time.  
 				queryParam: 'q',
 				type: 'POST',
 				contentType: 'json',
+
+				// The plugin will accept any trigger key'd in here, and then
+				// use that to start the search process.  if it doesn't exist it will not search.
+				trigger: "#",
 				searchResultsClass: ".search-result-wrapper",
 
 				success: function (data) {
