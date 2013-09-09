@@ -30,7 +30,7 @@
 
 
     // If we are using the backbone event bus then skip all binding, and move onto another check.
-    if (backboneEvents === true && !options.trigger || options.trigger === false) {
+    if (backboneEvents === true && (!options.trigger || options.trigger === false)) {
       fetchDataUsingBackboneOrAjax()
     }
 
