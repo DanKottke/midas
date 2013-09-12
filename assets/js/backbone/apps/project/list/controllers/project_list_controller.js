@@ -11,11 +11,15 @@ define([
 	'projects_app',
 	'modal_component',
 	'project_edit_form_view',
-	'autocomplete'
+	'autocomplete',
+	'search_model',
+	'search_result_item_view',
+	'text!template_name'
 ], function (
 	_, Backbone, Bootstrap, Utilities, BaseController, 
 	ProjectsCollection, ProjectsCollectionView, ProjectShowController, 
-	ProjectFormView, ProjectApp, ModalComponent, ProjectEditFormView, autocomplete) {
+	ProjectFormView, ProjectApp, ModalComponent, ProjectEditFormView, midasAutocomplete,
+	SearchModel, SearchResultItemView) {
 	
 	Application.Project.ListController = BaseController.extend({
 
@@ -101,7 +105,7 @@ define([
         this.projectFormView = new ProjectFormView({
           el: ".modal-body",
           collection: self.collection
-        }).render();  
+        }).render();
       }
 
 		},
@@ -132,6 +136,28 @@ define([
 			// to a backbone event on keypress/keyup, etc, and then in the function caller for that initialize this 
 			// plugin.  It needs to be initialized in line on the keyup, because the function does a check and then goes out
 			// to the server on each keypress.
+			
+			// BACKBONE IMPLEMENTATION
+			// var _this = this;
+			// $(".search").midasAutocomplete({
+			// 	backbone: {
+			// 		model: SearchModel,
+			// 		view: SearchResultItemView
+			// 	},
+
+			// 	backboneEvents: true,
+
+			// 	// NO NEED here for apiendpoint on backbone
+			// 	// because we are going to let them craft it on their own
+
+			// 	// apiEndpoint: '/ac/inline',
+			// 	// This defines wether save or fetch
+			// 	type: 'GET',
+			// 	trigger: false,
+			// 	searchResultsClass: ".search-result-wrapper"
+			// })
+
+			// AJAX IMPLEMENTATION
 			$(".search").midasAutocomplete({
 				backboneEvents: true,
 				// If we are using backbone here, then a lot of these 
@@ -150,13 +176,15 @@ define([
 
 				// The plugin will accept any trigger key'd in here, and then
 				// use that to start the search process.  if it doesn't exist it will not search.
-				trigger: "#",
+				trigger: "@",
 				searchResultsClass: ".search-result-wrapper",
 
 				success: function (data) {
 
 				}
 			});
+
+
 
 		},
 

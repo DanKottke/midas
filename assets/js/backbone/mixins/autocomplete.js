@@ -1,3 +1,5 @@
+
+
 // The semicolon at the beginning is in case of another library breaking ours (prevents ASI errors).
 // This plugin is being created using absolutely 0 semi-colons.  We are using our knowledge of Automatic
 // semicolon insertion (ASI) in JavaScript to do that for us, so we don't have to.  It's an experiment in cleanliness
@@ -11,7 +13,7 @@
     var $input                = this,
         on                    = options.on,
         type                  = options.type,
-        $inputData            = $input.val(),
+        $inputData            = $input.text(),
         $triggerChar          = options.trigger,
         backbone              = options.backbone,
         queryParam            = options.queryParam,
@@ -115,6 +117,18 @@
           var i = 0,
               results = data.length
 
+          function setEndOfContenteditable(contentEditableElement) {
+              var range,selection;
+              if (document.createRange) {
+                  range = document.createRange();
+                  range.selectNodeContents(contentEditableElement);
+                  range.collapse(false);
+                  selection = window.getSelection();
+                  selection.removeAllRanges();
+                  selection.addRange(range);
+              }
+          }
+
           // On each new successful character search, 
           // replace the previous results, and append the new results.
           $(searchResultsWrapper).children().remove()
@@ -123,6 +137,20 @@
             $(searchResultsWrapper).append(template(data[i]))
           }
 
+          $(".search-result-row").on("click", function (e) {
+            var e = $(e.currentTarget).children(".search-result-value").text() + " ";
+            console.log(e);
+            if ($(this).children().children("a").text() !== "") {
+              var a = $(this).children().children("a")[0]
+              $(".search").text("")
+              $(".search").append(a)
+              $(".search").append("<span class='focus' style='margin-left: 5px; background: #fff; margin-right: 5px;'>" + "-" + "</span")
+              setEndOfContenteditable($(".search").get(0)) // get dom node not jquery object
+            } else {
+              $(".search").text("").append("<span style='background: #eee;'>" + e + "</span>" + "<span class='focus' style='margin-left: 5px; background: #fff; margin-right: 5px;'>" + "-" + "</span")
+              setEndOfContenteditable($(".search").get(0)) // get dom node not jquery object
+            }
+          })
         },
 
         error: function (err) {
@@ -155,13 +183,13 @@
       // statement.
       if (result.target === "wikipedia") {
         result.target = "<img src='http://i.imgur.com/EwNMVSb.png' width='40px' />"
-        result.value = "<a href='http://en.wikipedia.org/wiki/Special:Search?search=" + result.value + "&go=Go'>" + result.value + "</a>"
+        result.value = "<a style='cursor: pointer; cursor: hand;' target='_blank' href='http://en.wikipedia.org/wiki/Special:Search?search=" + result.value + "&go=Go'>" + result.value + "</a>"
       } else if (result.target === "user") {
         result.target = "<img src='http://i.imgur.com/URcgvDA.png' width='40px' />"
       }
 
       return " " +
-        "<div class='search-result-row'> " +
+        "<div class='search-result-row' style='cursor: hand; cursor: pointer;'> " +
           "<span class='search-result-type' style='border-right: 1px #000 solid; height: 100%; float: left;'>" +
             result.target +    
           "</span>" +
