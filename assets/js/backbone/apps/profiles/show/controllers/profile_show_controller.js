@@ -16,9 +16,6 @@ define([
 
 		el: "#container",
 
-		events: {
-		},
-
 		initialize: function () {
 			this.initializeProfileModelInstance();
 		},

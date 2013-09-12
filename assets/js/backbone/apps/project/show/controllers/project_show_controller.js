@@ -9,16 +9,45 @@ define([
 	'comment_form_view',
 ], function ($, _, Backbone, BaseController, ProjectItemView, TaskListController, CommentListController, CommentFormView) {
 
+	// Set this up on a lower level class.
+	// The app object needs to set this up, or the router(&:thought)
 	Application.Project = {};
 
 	Application.Project.ShowController = BaseController.extend({
 
-		el: "#container",
 
 		// Set the model to null, before it is fetched from the server.
 		// This allows us to clear out the previous data from the list_view, 
 		// and get ready for the new data for the project show view.
 		model: null,
+
+		// Accepts the following options:
+		// subRegion: true,
+		// fullRegion: true
+		settings: {
+			fullRegion: true,
+
+			// This is a base function that needs to be mixed in from a lower level class.
+			// If the regionalEl is set to full region then set it to container,
+			// else set it to what the user sets it.
+			regionalEl: function () {
+				var self = this;
+				if (this.fullRegion) { 
+					self.regionalEl = "#container";
+				} else if (!this.fullRegion || this.subRegion) {
+					self.regionalEl = self.regionalEl;
+				}
+			},
+
+			// Experimenting with idea of mixing this into the settings object.  
+			viewEvents: {
+
+			}
+		},
+
+		viewEvents: {
+
+		},
 
 		events: {
 			"click .edit-project": "edit"
@@ -27,7 +56,11 @@ define([
 		// The initialize method is mainly used for event bindings (for effeciency)
 		initialize: function () {
 			var self = this;
-			
+				
+			// Automatically call this function everytime the base class instantiates.
+			this.settings.regionalEl();
+			this.el = this.settings.regionalEl;
+
 			this.model.trigger("project:model:fetch", this.model.id);	
 			this.listenTo(this.model, "project:model:fetch:success", function (model) {
 				this.model = model;

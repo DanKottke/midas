@@ -27,7 +27,7 @@ define([
 
       this.listenTo(this, "project:update:photoId", function (file) {
         self.updatePhoto(file);
-      });
+      });  
 
     },
 

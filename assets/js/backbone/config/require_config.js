@@ -97,7 +97,12 @@ require.config({
     //= Components
     // ----------
     'modal_component'           : '../components/modal',
-    'modal_template'            : '../components/modal_template.html'
+    'modal_template'            : '../components/modal_template.html',
+
+    // SEARCH Plugin for Backbone Usages
+    'search_model'              : '../entities/search/search_model',
+    'search_result_item_view'   : '../components/search_result_item_view',
+    'search_result_item_template':'../components/search_result_item_template.html'
   }
 
 });
