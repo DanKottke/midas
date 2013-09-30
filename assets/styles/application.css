@@ -1,12 +1,6 @@
 /*****************
 =  GLOBAL 
 ******************/
-/*
-#container {
-    width: 960px;
-    margin: 0 auto;
-}
-*/
 
 .search-result-row:hover {
 	background: #ccc;
@@ -29,8 +23,8 @@
 ******************/
 
 .navbar .nav .navbar-title-small {
-	font-size: 14px;
-	font-weight: bold;
+	font-size: 24px;
+	font-family: Helvetica;
 }
 
 .navbar .nav .navbar-title-big {
@@ -394,7 +388,10 @@ ul.tags > li {
 ******************/
 .task {
 	font-size: 13px;
+	margin-top: 22px;
+	border-radius: 10px;
 }
+
 .task-title {
 	font-size: 16px;
 	font-weight: bold;
@@ -415,7 +412,7 @@ ul.tags > li {
 }
 
 #task-list-wrapper {
-	margin-top: 20px;
+	margin-top: -4px;
 }
 
 
@@ -541,6 +538,7 @@ ul.tags > li {
 ul.comment-list > li {
 	list-style: none;
 	position: relative;
+	border-radius: 6px;
 }
 
 .comment-list-wrapper {
@@ -561,7 +559,9 @@ ul.comment-list {
 .add-comment-button {
 	float: right;
 }
-
+.add-task {
+	margin-top: -35px;
+}
 .user-username {
 	font-weight: bold;
 }
@@ -585,13 +585,11 @@ ul.comment-list {
 	margin: 2px;
 	display: table-cell;
 	vertical-align: top;
-}
-
-.comment-image {
 	max-height: 40px;
 	max-width: 40px;
 	height: 40px;
 	width: 40px;
+	border-radius: 5px;
 }
 
 .comment-inner {
@@ -599,4 +597,14 @@ ul.comment-list {
 	display: table-cell;
 	width: 100%;
 	vertical-align: top;
+}
+
+/* Tags */
+
+.tag-actions {
+	margin-top: -30px;
+}
+
+.tag-type-text {
+	font-size: 14px;
 }
