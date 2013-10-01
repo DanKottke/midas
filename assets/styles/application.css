@@ -263,6 +263,10 @@ body > .popover {
 	position: relative;
 }
 
+.specialized-project-show {
+	margin-bottom: 20px;
+}
+
 #project-admin-bar #file-upload-progress-container {
 	margin-top: 10px;
 	margin-bottom: 0;
@@ -578,6 +582,10 @@ ul.comment-list {
 	display: inline-table;
 	background: #eee;
 	margin-top: 10px;
+}
+
+.sub-comment {
+	margin-left: 20px;
 }
 
 .comment-image {
