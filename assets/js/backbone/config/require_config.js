@@ -1,5 +1,5 @@
-
 require.config({
+  waitSeconds: 200,
 
   paths: {
 
@@ -82,6 +82,9 @@ require.config({
     'task_list_controller'      : '../apps/tasks/list/controllers/task_list_controller',
     'task_collection_view'      : '../apps/tasks/list/views/task_collection_view',
     'task_form_view'            : '../apps/tasks/new/views/task_form_view',
+    'task_item_view'            : '../apps/tasks/show/views/task_item_view',
+    'task_show_template'        : '../apps/tasks/task_show_item_template.html',
+    'task_show_controller'      : '../apps/tasks/task_show_controller',
 
     // ----------
     //= Events
@@ -108,6 +111,8 @@ require.config({
     // ----------
     'comment_list_controller'   : '../apps/comments/list/controllers/comment_list_controller',
     'comment_list_template'     : '../apps/comments/list/templates/comment_list_template.html',
+    'comment_item_template'     : '../apps/comments/list/templates/comment_item_template.html',
+    'comment_wrapper_template'  : '../apps/comments/list/templates/comment_wrapper_template.html',
     'comment_list_view'         : '../apps/comments/list/views/comment_list_view',
     'comment_collection'        : '../entities/comments/comment_collection',
     'comment_model'             : '../entities/comments/comment_model',

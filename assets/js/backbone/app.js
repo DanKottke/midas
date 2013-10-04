@@ -20,6 +20,7 @@ define([
   'apps_router'
 ], function (_, Backbone, AppsRouter) {
 
+
   Application = {
 
     started: null,

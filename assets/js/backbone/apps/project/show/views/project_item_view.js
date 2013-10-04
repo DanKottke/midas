@@ -9,7 +9,6 @@ define([
   'text!project_tag_template',
   'project_edit_form_view'
 ], function ($, dropzone, select2, _, Backbone, TagConfig, ProjectShowTemplate, ProjectTagTemplate, ProjectEditFormView) {
-  'use strict';
 
   var ProjectShowView = Backbone.View.extend({
 
@@ -59,9 +58,11 @@ define([
       // Load tags for the view
       var self = this;
 
-      var tagIcon = {}
+      var tagIcon = {};
+      var tagClass = {};
       for (var i = 0; i < TagConfig.tags.length; i++) {
         tagIcon[TagConfig.tags[i].type] = TagConfig.tags[i].icon;
+        tagClass[TagConfig.tags[i].type] = TagConfig.tags[i]['class'];
       }
 
       var renderTag = function(tag) {
@@ -69,6 +70,7 @@ define([
         var compiledTemplate = _.template(ProjectTagTemplate, templData);
         var tagDom = $("." + tag.tag.type).children(".tags");
         tagDom.append(compiledTemplate);
+        $('#' + tagClass[tag.tag.type] + '-empty').hide();
       };
 
       $.ajax({
@@ -116,12 +118,17 @@ define([
       // Tags saved using the select2 dialog
       this.listenTo(this.model, "project:tag:save", function (data) {
         for (var i = 0; i < data.length; i++) {
-          renderTag(data[i]);
+          if (!data[i].existing) {
+            renderTag(data[i]);
+          }
         }
         $("#input-tags").select2("val", "");
       });
 
       this.listenTo(this.model, "project:tag:delete", function (e) {
+        if ($(e.currentTarget).parent('li').siblings().length == 1) {
+          $(e.currentTarget).parent('li').siblings('.tag-empty').show();
+        }
         $(e.currentTarget).parent('li').remove();
       });
     },
