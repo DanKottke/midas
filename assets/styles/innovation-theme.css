@@ -8,7 +8,7 @@ h1 {
 }
 
 h2 {
-  color: #007D3D;
+  color: #527BDD;
   font-size: 36px;
   font-weight: bold;
 }
@@ -116,16 +116,16 @@ h6 {
 }
 
 .sidebar-c1-light {
-  background-color: #99DBB9;
-  color: #005329;
+  background-color: #99C8E0;
+  color: #003B59;
 }
 
 .sidebar-c1-highlight {
-  color: white;
+  color: #fff;
 }
 
 .sidebar-c1-bar {
-  border-color: #00A651;
+  border-color: #527BDD;
 }
 
 .sidebar-c2 {
