@@ -30,13 +30,13 @@ define([
       model.set({ id: id });
       if (self.projectShowController) self.projectShowController.cleanup();
       self.projectShowController = new ProjectShowController({ model: model, router: this });
-    },
+    }
 
   });
 
   var initialize = function () {
     var router = new ProjectRouter();
-  } 
+  }
 
   return {
     initialize: initialize

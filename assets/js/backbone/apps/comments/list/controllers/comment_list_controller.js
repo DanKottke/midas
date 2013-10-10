@@ -7,8 +7,8 @@ define([
   'comment_list_view',
   'comment_form_view',
   'comment_item_view',
-  'topic_view'
-], function ($, _, Backbone, Popovers, CommentCollection, CommentListView, CommentFormView, CommentItemView, TopicView) {
+  'comment_form_view'
+], function ($, _, Backbone, Popovers, CommentCollection, CommentListView, CommentFormView, CommentItemView, CommentFormView) {
 
   var popovers = new Popovers();
 
@@ -93,24 +93,43 @@ define([
     renderView: function (collection) {
       var self = this;
 
-      _.each(collection.models[0].attributes.comments, function (comment) {
-        if (comment.topic === true && comment.comments) {
-          // Render the topic view and then in that view spew out all of its children.
-          // console.log("Comment's with children:");
-          self.topic = new TopicView({
-            el: ".comment-list-wrapper",
+      var data = {
+        comments: collection.toJSON()[0].comments
+      }
+
+      _.each(data.comments, function (comment) {
+
+        // Render the topic view and then in that view spew out all of its children.
+        // console.log("Comment's with children:");
+        if (comment.topic) {
+          self.comment = new CommentItemView({
+            el: "#comment-list-null",
             model: comment,
             projectId: self.options.projectId,
             collection: collection
           }).render();
-        } else if (!comment.topic && comment.parentId === null) {
-          // console.log("Comment's with no parents");
-          self.independentComment = new CommentItemView({
-            el: ".comment-list-wrapper",
-            model: comment
+        } else {
+          self.comment = new CommentItemView({
+            el: "#comment-list-" + comment.parentId,
+            model: comment,
+            projectId: self.options.projectId,
+            collection: collection
+          }).render();
+
+          // Place the commentForm at the bottom of the list of comments for that topic.
+          self.commentForm = new CommentFormView({
+            el: '#comment-form-' + comment.id,
+            projectId: comment.projectId,
+            parentId: comment.id,
+            collection: self.options.collection
           });
         }
+
       });
+
+
+
+
       this.initializeCommentUIAdditions();
     },
 

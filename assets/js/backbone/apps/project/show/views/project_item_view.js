@@ -92,7 +92,7 @@ define([
       myDropzone.on("thumbnail", function(file) { });
     },
 
-      
+
     cleanup: function () {
       $(this.el).children().remove();
       this.undelegateEvents()
