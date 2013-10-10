@@ -1,8 +1,10 @@
 <li class="<% if (topic) { %>topic<% }%>">
   <%= value %>
+  <a href="#reply-to-comment" class="reply-to-<%= id %>">Reply</a>
+
   <ul id="comment-list-<%= id %>">
 
   </ul>
 
-  <div class="comment-form" id="comment-form-<%= id %>"></div>
+  <div class="comment-form hidden" id="comment-form-<%= id %>"></div>
 </li>

@@ -145,7 +145,10 @@ define([
     },
 
     reply: function (e) {
-      // TBD.
+      if (e.preventDefault()) e.preventDefault();
+      // The comment form is adjacent, not a child of the current target.
+      $(e.currentTarget + ".comment-form").removeClass("hidden");
+      // Display form.
     },
 
     newTopic: function (e) {
