@@ -98,6 +98,18 @@ define([
       }
 
       _.each(data.comments, function (comment) {
+      var depth = {};
+      for (var i = 0; i < data.comments.length; i += 1) {
+        if (data.comments[i].topic === true) {
+          depth[data.comments[i].id] = 0;
+          data.comments[i]['depth'] = depth[data.comments[i].id];
+        } else {
+          depth[data.comments[i].id] = depth[data.comments[i].parentId] + 1;
+          data.comments[i]['depth'] = depth[data.comments[i].id];
+        }
+      }
+
+      _.each(data.comments, function (comment, index, depth) {
 
         // Render the topic view and then in that view spew out all of its children.
         // console.log("Comment's with children:");
@@ -116,19 +128,20 @@ define([
             collection: collection
           }).render();
 
-          // Place the commentForm at the bottom of the list of comments for that topic.
-          self.commentForm = new CommentFormView({
-            el: '#comment-form-' + comment.id,
-            projectId: comment.projectId,
-            parentId: comment.id,
-            collection: self.options.collection
-          });
+          if (comment.depth <= 1) {
+            // Place the commentForm at the bottom of the list of comments for that topic.
+            self.commentForm = new CommentFormView({
+              el: '#comment-form-' + comment.id,
+              projectId: comment.projectId,
+              parentId: comment.id,
+              collection: self.options.collection
+            });
+          } else {
+
+          }
         }
 
       });
-
-
-
 
       this.initializeCommentUIAdditions();
     },

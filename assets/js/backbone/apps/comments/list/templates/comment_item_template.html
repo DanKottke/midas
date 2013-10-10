@@ -1,6 +1,9 @@
 <li class="<% if (topic) { %>topic<% }%>">
   <%= value %>
-  <a href="#reply-to-comment" class="reply-to-<%= id %>">Reply</a>
+
+  <% if (depth <= 1) { %>
+    <a href="#reply-to-comment" class="reply-to-<%= id %>">Reply</a>
+  <% } %>
 
   <ul id="comment-list-<%= id %>">
 
