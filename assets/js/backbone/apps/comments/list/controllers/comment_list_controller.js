@@ -147,8 +147,11 @@ define([
     reply: function (e) {
       if (e.preventDefault()) e.preventDefault();
       // The comment form is adjacent, not a child of the current target.
-      $(e.currentTarget + ".comment-form").removeClass("hidden");
-      // Display form.
+      if ($("." + e.currentTarget.className + " ~ .comment-form").attr("data-clicked") === "true") {
+        $("." + e.currentTarget.className + " ~ .comment-form").addClass("hidden").attr("data-clicked", false);
+      } else {
+        $("." + e.currentTarget.className + " ~ .comment-form").removeClass("hidden").attr("data-clicked", true);
+      }
     },
 
     newTopic: function (e) {
